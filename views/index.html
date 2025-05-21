@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartLecture — AlmaValley</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>SmartLecture</h1>
+      <p class="tagline">Трансформация образования с помощью интеллектуальных технологий</p>
+      <p class="description">Оставьте контакт, и мы пришлём вам полную транскрибацию лекции</p>
+
+      <form method="POST" action="/submit" class="form">
+        <label for="name">ФИО</label>
+        <input type="text" name="name" id="name" placeholder="Иванов Иван Иванович" required />
+
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="you@example.com" required />
+
+        <button type="submit">Получить</button>
+      </form>
+
+      <footer>© AlmaValley</footer>
+    </main>
+  </body>
+</html>

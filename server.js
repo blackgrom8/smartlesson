@@ -1,23 +1,25 @@
 const express = require("express")
 const path = require("path")
 const admin = require("firebase-admin")
-const serviceAccount = require("./firebase-key.json")
 
-// Firebase Admin инициализация
+// ✅ Чтение firebase credentials из переменной среды
+const serviceAccount = JSON.parse(process.env.FIREBASE_KEY_JSON)
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 })
 
 const db = admin.firestore()
-
 const app = express()
-const PORT = 3000
+
+// ⚠️ Koyeb даёт порт через переменную среды
+const PORT = process.env.PORT || 8000
 
 // Middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, "public")))
 
-// Главная страница формы
+// Главная страница с формой
 app.get("/", (_, res) => {
   res.sendFile(path.join(__dirname, "views/index.html"))
 })
@@ -39,8 +41,6 @@ app.post("/submit", async (req, res) => {
     })
 
     console.log(`✅ Добавлено: ${name} <${email}>`)
-
-    // Перенаправление на thankyou.html с параметрами
     res.redirect(`/thankyou?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`)
   } catch (err) {
     console.error("❌ Ошибка Firestore:", err)
@@ -50,5 +50,5 @@ app.post("/submit", async (req, res) => {
 
 // Запуск сервера
 app.listen(PORT, () => {
-  console.log(`🚀 Сервер работает: http://localhost:${PORT}`)
+  console.log(`🚀 Сервер работает на порту ${PORT}`)
 })
